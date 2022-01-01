@@ -9,7 +9,7 @@ const Todo = (id) => {
     >
       <ListItemText
         primary={id.title}
-        secondary={moment(id.timestamp).format("MMMM do, yyyy")}
+        secondary={moment(id.timestamp).format("MMMM Do, YYYY")}
       />
     </ListItem>
   );
