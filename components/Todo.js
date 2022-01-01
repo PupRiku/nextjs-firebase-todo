@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { TodoContext } from "../pages/TodoContext";
 
 const Todo = (id) => {
-  const { showAlert } = useContext(TodoContext);
+  const { showAlert, setTodo } = useContext(TodoContext);
 
   const deleteTodo = async (id, e) => {
     e.stopPropagation();
@@ -19,6 +19,14 @@ const Todo = (id) => {
 
   return (
     <ListItem
+      onClick={() =>
+        setTodo({
+          id: id.id,
+          title: id.title,
+          details: id.details,
+          timestamp: id.timestamp,
+        })
+      }
       sx={{ mt: 3, boxShadow: 3 }}
       style={{ backgroundColor: "#fafafa" }}
       secondaryAction={

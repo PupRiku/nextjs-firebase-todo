@@ -29,7 +29,7 @@ const TodoList = () => {
           key={todo.id}
           id={todo.id}
           title={todo.title}
-          detail={todo.details}
+          details={todo.details}
           timestamp={todo.timestamp}
         />
       ))}
