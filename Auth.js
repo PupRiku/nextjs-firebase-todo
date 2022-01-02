@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const auth = getAuth();
     return auth.onIdTokenChanged(async (user) => {
-      console.log(user)
       if (!user) {
         setCurrentUser(null);
         setLoading(false);
