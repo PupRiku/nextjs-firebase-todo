@@ -6,15 +6,22 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useContext } from "react";
 import { TodoContext } from "../pages/TodoContext";
+import { useRouter } from "next/router";
 
 const Todo = (id) => {
   const { showAlert, setTodo } = useContext(TodoContext);
+  const router = useRouter();
 
   const deleteTodo = async (id, e) => {
     e.stopPropagation();
     const docRef = doc(db, "todos", id.id);
     await deleteDoc(docRef);
     showAlert("error", `Todo with id ${id.id} deleted successfully`);
+  };
+
+  const seeMore = (id, e) => {
+    e.stopPropagation();
+    router.push(`/todos/${id.id}`);
   };
 
   return (
@@ -34,7 +41,7 @@ const Todo = (id) => {
           <IconButton onClick={(e) => deleteTodo(id, e)}>
             <DeleteIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={(e) => seeMore(id, e)}>
             <MoreVertIcon />
           </IconButton>
         </>
