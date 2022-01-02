@@ -1,5 +1,6 @@
 import { Alert, Container, Snackbar } from "@mui/material";
 import { useState } from "react";
+import Loading from "../components/Loading";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 import { TodoContext } from "./TodoContext";
@@ -23,6 +24,8 @@ export default function Home() {
 
     setOpen(false);
   };
+
+  return <Loading type='bubbles' color='yellowgreen' />;
 
   return (
     <TodoContext.Provider value={{ showAlert, todo, setTodo }}>
