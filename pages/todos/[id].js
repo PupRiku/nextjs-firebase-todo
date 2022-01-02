@@ -1,5 +1,13 @@
-import { Grid } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import Link from "next/link";
 import { db } from "../../firebase";
 
 const Detail = ({ todoProps }) => {
@@ -13,7 +21,26 @@ const Detail = ({ todoProps }) => {
       justifyContent="center"
       style={{ minHeight: "100vh" }}
     >
-      {todo.title}: {todo.details}
+      <Grid item xs={3}>
+        <Card
+          sx={{ minWidth: 275, maxWidth: 500, boxShadow: 3 }}
+          style={{ backgroundColor: "#fafafa" }}
+        >
+          <CardContent>
+            <Typography variant="h5" component="div">
+              {todo.title}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              {todo.details}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Link href="/" passHref>
+              <Button size="small">Back to Home</Button>
+            </Link>
+          </CardActions>
+        </Card>
+      </Grid>
     </Grid>
   );
 };
