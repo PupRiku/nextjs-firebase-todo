@@ -12,9 +12,12 @@ import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 import { TodoContext } from "./TodoContext";
 import { useAuth } from "../Auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import nookies from "nookies";
+import { verifyIdToken } from "../firebaseAdmin";
 
-export default function Home() {
+export default function Home({ todosProps }) {
   const { currentUser } = useAuth();
   const [open, setOpen] = useState(false);
   const [alertType, setAlertType] = useState("success");
@@ -59,8 +62,38 @@ export default function Home() {
             {alertMessage}
           </Alert>
         </Snackbar>
-        <TodoList />
+        <TodoList todosProps={todosProps} />
       </Container>
     </TodoContext.Provider>
   );
+}
+
+export async function getServerSideProps(context) {
+  try {
+    const cookies = nookies.get(context);
+    const token = await verifyIdToken(cookies.token);
+    const { email } = token;
+    const collectionRef = collection(db, "todos");
+    const q = query(
+      collectionRef,
+      where("email", "==", email),
+      orderBy("timestamp", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    let todos = [];
+    querySnapshot.forEach((doc) => {
+      todos.push({
+        ...doc.data(),
+        id: doc.id,
+        timestamp: doc.data().timestamp.toDate().getTime(),
+      });
+    });
+    return {
+      props: {
+        todosProps: JSON.stringify(todos) || [],
+      },
+    };
+  } catch (error) {
+    return { props: {} };
+  }
 }
