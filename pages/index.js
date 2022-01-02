@@ -19,7 +19,7 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const [alertType, setAlertType] = useState("success");
   const [alertMessage, setAlertMessage] = useState("");
-  const [todo, setTodo] = useState({ title: "", detail: "" });
+  const [todo, setTodo] = useState({ title: "", details: "" });
 
   const showAlert = (type, message) => {
     setAlertType(type);
