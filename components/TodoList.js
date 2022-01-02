@@ -19,7 +19,7 @@ const TodoList = () => {
 
     const q = query(
       collectionRef,
-      where("email", "==", currentUser.email),
+      where("email", "==", currentUser?.email),
       orderBy("timestamp", "desc")
     );
 
